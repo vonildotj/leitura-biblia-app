@@ -35,7 +35,7 @@ jobs:
 
     - name: Preparar Capacitor (Init e Add)
       run: |
-        npx cap init "Biblia Teste" "com.teste.biblia3" --web-dir=www || true
+        npx cap init "Leitura Diária" "com.leitura.diaria4" --web-dir=www || true
         npx cap add android || true
 
     - name: Sync Capacitor
@@ -47,7 +47,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Gerar ícone e configurar Android corretamente
+    - name: Gerar ícone com a imagem real e configurar Android
       run: |
         node -e "
           const sharp = require('sharp');
@@ -63,25 +63,32 @@ jobs:
           };
           
           async function gerar() {
-            // 1. Gera a imagem amarela com margem (o Android não gosta de imagens que encostam na borda)
+            // Verifica se a imagem icon.png existe na raiz
+            if (!fs.existsSync('icon.png')) {
+              console.error('ERRO: O arquivo icon.png não foi encontrado na raiz do projeto!');
+              process.exit(1);
+            }
+
+            // 1. Gera a imagem redimensionada com margem
             for (const [folder, size] of Object.entries(sizes)) {
               const dir = path.join('android', 'app', 'src', 'main', 'res', folder);
               if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
               
-              // Cria uma imagem amarela um pouco menor que o tamanho total (para dar margem)
               const innerSize = Math.floor(size * 0.7);
               const padding = Math.floor((size - innerSize) / 2);
               
-              await sharp({ create: { width: innerSize, height: innerSize, channels: 4, background: { r: 255, g: 255, b: 0, alpha: 1 } } })
+              // MUDANÇA AQUI: Agora usa o seu icon.png em vez do quadrado amarelo
+              await sharp('icon.png')
+                .resize(innerSize, innerSize, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
                 .extend({ top: padding, bottom: padding, left: padding, right: padding, background: { r: 0, g: 0, b: 0, alpha: 0 } })
                 .png()
                 .toFile(path.join(dir, 'ic_launcher_foreground.png'));
             }
 
-            // 2. Define a cor de fundo do ícone (Azul Escuro)
+            // 2. Define a cor de fundo do ícone (Branco para combinar com a Bíblia)
             const valuesDir = path.join('android', 'app', 'src', 'main', 'res', 'values');
             if (!fs.existsSync(valuesDir)) fs.mkdirSync(valuesDir, { recursive: true });
-            fs.writeFileSync(path.join(valuesDir, 'ic_launcher_background.xml'), '<resources>\n    <color name=\"ic_launcher_background\">#003366</color>\n</resources>');
+            fs.writeFileSync(path.join(valuesDir, 'ic_launcher_background.xml'), '<resources>\n    <color name=\"ic_launcher_background\">#FFFFFF</color>\n</resources>');
 
             // 3. Cria o arquivo XML que junta o fundo e a imagem
             const anyDpiDir = path.join('android', 'app', 'src', 'main', 'res', 'mipmap-anydpi-v26');
