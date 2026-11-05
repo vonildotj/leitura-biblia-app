@@ -35,8 +35,7 @@ jobs:
 
     - name: Preparar Capacitor (Init e Add)
       run: |
-        # MUDANÇA AQUI: Nome do app mudou para "Biblia Teste"
-        npx cap init "Biblia Teste" "com.teste.biblia" --web-dir=www || true
+        npx cap init "Biblia Teste" "com.teste.biblia3" --web-dir=www || true
         npx cap add android || true
 
     - name: Sync Capacitor
@@ -48,7 +47,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Gerar ícone de teste e configurar Android
+    - name: Gerar ícone e configurar Android corretamente
       run: |
         node -e "
           const sharp = require('sharp');
@@ -64,24 +63,31 @@ jobs:
           };
           
           async function gerar() {
+            // 1. Gera a imagem amarela com margem (o Android não gosta de imagens que encostam na borda)
             for (const [folder, size] of Object.entries(sizes)) {
               const dir = path.join('android', 'app', 'src', 'main', 'res', folder);
               if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
               
-              // MUDANÇA AQUI: Cor do ícone agora é AMARELA (r: 255, g: 255, b: 0)
-              await sharp({ create: { width: size, height: size, channels: 4, background: { r: 255, g: 255, b: 0, alpha: 1 } } })
+              // Cria uma imagem amarela um pouco menor que o tamanho total (para dar margem)
+              const innerSize = Math.floor(size * 0.7);
+              const padding = Math.floor((size - innerSize) / 2);
+              
+              await sharp({ create: { width: innerSize, height: innerSize, channels: 4, background: { r: 255, g: 255, b: 0, alpha: 1 } } })
+                .extend({ top: padding, bottom: padding, left: padding, right: padding, background: { r: 0, g: 0, b: 0, alpha: 0 } })
                 .png()
-                .toFile(path.join(dir, 'ic_launcher.png'));
-                
-              await sharp({ create: { width: size, height: size, channels: 4, background: { r: 255, g: 255, b: 0, alpha: 1 } } })
-                .png()
-                .toFile(path.join(dir, 'ic_launcher_round.png'));
+                .toFile(path.join(dir, 'ic_launcher_foreground.png'));
             }
 
+            // 2. Define a cor de fundo do ícone (Azul Escuro)
+            const valuesDir = path.join('android', 'app', 'src', 'main', 'res', 'values');
+            if (!fs.existsSync(valuesDir)) fs.mkdirSync(valuesDir, { recursive: true });
+            fs.writeFileSync(path.join(valuesDir, 'ic_launcher_background.xml'), '<resources>\n    <color name=\"ic_launcher_background\">#003366</color>\n</resources>');
+
+            // 3. Cria o arquivo XML que junta o fundo e a imagem
             const anyDpiDir = path.join('android', 'app', 'src', 'main', 'res', 'mipmap-anydpi-v26');
             if (!fs.existsSync(anyDpiDir)) fs.mkdirSync(anyDpiDir, { recursive: true });
             
-            const xmlContent = '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\n    <background android:drawable=\"@color/ic_launcher_background\"/>\n    <foreground android:drawable=\"@mipmap/ic_launcher\"/>\n</adaptive-icon>';
+            const xmlContent = '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\n    <background android:drawable=\"@color/ic_launcher_background\"/>\n    <foreground android:drawable=\"@mipmap/ic_launcher_foreground\"/>\n</adaptive-icon>';
             
             fs.writeFileSync(path.join(anyDpiDir, 'ic_launcher.xml'), xmlContent);
           }
