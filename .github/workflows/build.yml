@@ -21,11 +21,13 @@ jobs:
     - name: Instalar dependências
       run: npm install
 
+    - name: Preparar pasta web
+      run: npm run build
+
     - name: Preparar Capacitor
       run: |
-        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=.
+        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=www
         npx cap add android
-        mkdir -p android/app/src/main/assets
 
     - name: Sincronizar arquivos
       run: npx cap sync android
