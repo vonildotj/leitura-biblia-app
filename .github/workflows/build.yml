@@ -27,16 +27,29 @@ jobs:
     - name: Preparar pasta www
       run: |
         mkdir -p www
-        cp index.html www/
-        cp clientes.js www/ || true
-        cp sw.js www/ || true
+        # Copia o index.html
+        cp index.html www/ || true
+        
+        # Copia pastas inteiras se existirem (CSS, JS, Imagens, etc)
+        cp -r css www/ || true
+        cp -r js www/ || true
+        cp -r img www/ || true
+        cp -r assets www/ || true
+        cp -r imagens www/ || true
+        
+        # Copia arquivos soltos na raiz do projeto
+        cp *.css www/ || true
+        cp *.js www/ || true
         cp *.jpg www/ || true
         cp *.png www/ || true
-        cp manifest.json www/ || true
+        cp *.json www/ || true
+        cp *.ico www/ || true
 
     - name: Preparar Capacitor (Init e Add)
       run: |
+        # Cria a configuração do Capacitor apontando para a pasta www
         npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=www || true
+        # Adiciona a plataforma Android (se já existir, ele ignora)
         npx cap add android || true
 
     - name: Sync Capacitor
@@ -69,10 +82,13 @@ jobs:
               if (!fs.existsSync(dir)) {
                 fs.mkdirSync(dir, { recursive: true });
               }
-              await sharp('icon.png')
-                .resize(size, size)
-                .toFile(path.join(dir, 'ic_launcher.png'));
-              console.log('Gerado: ' + folder);
+              // Verifica se o icon.png existe na raiz antes de tentar redimensionar
+              if (fs.existsSync('icon.png')) {
+                await sharp('icon.png')
+                  .resize(size, size)
+                  .toFile(path.join(dir, 'ic_launcher.png'));
+                console.log('Gerado: ' + folder);
+              }
             }
           }
           
