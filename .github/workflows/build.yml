@@ -35,8 +35,8 @@ jobs:
 
     - name: Preparar Capacitor (Init e Add)
       run: |
-        # MUDANÇA AQUI: O ID agora é diaria2 para forçar o celular a criar um novo app
-        npx cap init "Leitura Diária" "com.leitura.diaria2" --web-dir=www || true
+        # MUDANÇA AQUI: Nome do app mudou para "Biblia Teste"
+        npx cap init "Biblia Teste" "com.teste.biblia" --web-dir=www || true
         npx cap add android || true
 
     - name: Sync Capacitor
@@ -68,11 +68,12 @@ jobs:
               const dir = path.join('android', 'app', 'src', 'main', 'res', folder);
               if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
               
-              await sharp({ create: { width: size, height: size, channels: 4, background: { r: 255, g: 0, b: 0, alpha: 1 } } })
+              // MUDANÇA AQUI: Cor do ícone agora é AMARELA (r: 255, g: 255, b: 0)
+              await sharp({ create: { width: size, height: size, channels: 4, background: { r: 255, g: 255, b: 0, alpha: 1 } } })
                 .png()
                 .toFile(path.join(dir, 'ic_launcher.png'));
                 
-              await sharp({ create: { width: size, height: size, channels: 4, background: { r: 255, g: 0, b: 0, alpha: 1 } } })
+              await sharp({ create: { width: size, height: size, channels: 4, background: { r: 255, g: 255, b: 0, alpha: 1 } } })
                 .png()
                 .toFile(path.join(dir, 'ic_launcher_round.png'));
             }
