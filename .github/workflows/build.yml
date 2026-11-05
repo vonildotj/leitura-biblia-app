@@ -23,7 +23,7 @@ jobs:
 
     - name: Preparar Capacitor
       run: |
-        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=. --no-git
+        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=.
         npx cap add android
 
     - name: Sincronizar arquivos
