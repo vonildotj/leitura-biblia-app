@@ -21,9 +21,6 @@ jobs:
     - name: Instalar dependências
       run: npm install
 
-    - name: Instalar Sharp para os ícones
-      run: npm install sharp
-
     - name: Preparar pasta www
       run: |
         mkdir -p www
@@ -47,53 +44,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Gerar ícones para Android
+    # --- NOVO PASSO: USA A FERRAMENTA OFICIAL DO CAPACITOR PARA OS ÍCONES ---
+    - name: Gerar ícones com Capacitor Assets
       run: |
-        node -e "
-          const sharp = require('sharp');
-          const fs = require('fs');
-          const path = require('path');
-          
-          const sizes = {
-            'mipmap-mdpi': 48,
-            'mipmap-hdpi': 72,
-            'mipmap-xhdpi': 96,
-            'mipmap-xxhdpi': 144,
-            'mipmap-xxxhdpi': 192
-          };
-          
-          async function gerar() {
-            for (const [folder, size] of Object.entries(sizes)) {
-              const dir = path.join('android', 'app', 'src', 'main', 'res', folder);
-              if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir, { recursive: true });
-              }
-              if (fs.existsSync('icon.png')) {
-                await sharp('icon.png')
-                  .resize(size, size)
-                  .toFile(path.join(dir, 'ic_launcher.png'));
-                
-                await sharp('icon.png')
-                  .resize(size, size)
-                  .toFile(path.join(dir, 'ic_launcher_round.png'));
-              }
-            }
-
-            const anyDpiDir = path.join('android', 'app', 'src', 'main', 'res', 'mipmap-anydpi-v26');
-            if (!fs.existsSync(anyDpiDir)) {
-              fs.mkdirSync(anyDpiDir, { recursive: true });
-            }
-            
-            const xmlContent = '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<adaptive-icon xmlns:android=\"http://schemas.android.com/apk/res/android\">\n    <background android:drawable=\"@color/ic_launcher_background\"/>\n    <foreground android:drawable=\"@mipmap/ic_launcher\"/>\n</adaptive-icon>';
-            
-            fs.writeFileSync(path.join(anyDpiDir, 'ic_launcher.xml'), xmlContent);
-          }
-          
-          gerar().catch(err => {
-            console.error(err);
-            process.exit(1);
-          });
-        "
+        # Instala a ferramenta oficial de assets do Capacitor
+        npm install @capacitor/assets --save-dev
+        # Gera os ícones e splashes a partir do arquivo icon.png na raiz
+        npx capacitor-assets generate --android
+    # -------------------------------------------------------------------------
 
     - name: Compilar APK
       working-directory: ./android
