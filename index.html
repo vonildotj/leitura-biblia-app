@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Leitura Diária da Bíblia</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonte do Google Fonts para um visual profissional -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Cabeçalho -->
+        <header class="app-header">
+            <button class="theme-toggle" id="theme-toggle" title="Alternar Tema">🌙</button>
+            <h1>LEITURA DIÁRIA</h1>
+            <p>DA BÍBLIA</p>
+        </header>
+
+        <!-- Card Principal (Design Moderno) -->
+        <main class="main-card">
+            
+            <!-- Data -->
+            <div class="date-badge" id="display-date">
+                Carregando...
+            </div>
+
+            <!-- Leitura -->
+            <div class="reading-content">
+                <h2 id="display-reading">...</h2>
+            </div>
+
+            <!-- Botões de Ação -->
+            <div class="action-buttons">
+                <a href="#" id="btn-ler" class="btn btn-primary" target="_blank">
+                    Ler no JW.org
+                </a>
+                <!-- O botão de áudio pode ser um link secundário -->
+                <a href="#" id="btn-ouvir" class="btn btn-secondary" target="_blank">
+                    Ouvir Áudio
+                </a>
+            </div>
+
+        </main>
+
+        <!-- Rodapé (Versículo do dia fixo) -->
+        <footer class="app-footer">
+            <p>"Este livro da Lei deve estar sempre em seus lábios; LEIA-O em voz baixa DIA e NOITE..."</p>
+            <span>- Josué 1:8</span>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
