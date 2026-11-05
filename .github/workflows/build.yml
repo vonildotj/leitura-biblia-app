@@ -38,6 +38,24 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    # --- NOVO PASSO: GERAR E COPIAR OS ÍCONES ---
+    - name: Instalar ImageMagick
+      run: sudo apt-get install -y imagemagick
+
+    - name: Gerar ícones para Android
+      run: |
+        # Lista de pastas de ícones do Android e seus tamanhos
+        declare -A sizes=( ["mipmap-mdpi"]=48 ["mipmap-hdpi"]=72 ["mipmap-xhdpi"]=96 ["mipmap-xxhdpi"]=144 ["mipmap-xxxhdpi"]=192 )
+        
+        for folder in "${!sizes[@]}"; do
+          size=${sizes[$folder]}
+          # Cria a pasta se não existir
+          mkdir -p android/app/src/main/res/$folder
+          # Redimensiona a imagem e salva como ic_launcher.png
+          convert icon.png -resize ${size}x${size} android/app/src/main/res/$folder/ic_launcher.png
+        done
+    # ---------------------------------------------
+
     - name: Compilar APK
       working-directory: ./android
       run: |
