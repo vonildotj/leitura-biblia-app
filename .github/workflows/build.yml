@@ -25,6 +25,7 @@ jobs:
       run: |
         npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=.
         npx cap add android
+        mkdir -p android/app/src/main/assets
 
     - name: Sincronizar arquivos
       run: npx cap sync android
