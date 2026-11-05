@@ -13,8 +13,12 @@
     <div class="app-container">
         
         <!-- Cabeçalho -->
+        <!-- Cabeçalho -->
         <header class="app-header">
             <button class="theme-toggle" id="theme-toggle" title="Alternar Tema">🌙</button>
+            <!-- NOVO BOTÃO DE CALENDÁRIO -->
+            <button class="date-toggle" id="date-toggle" title="Escolher Data">📅</button>
+            
             <h1>LEITURA DIÁRIA</h1>
             <p>DA BÍBLIA</p>
         </header>
@@ -35,7 +39,7 @@
             <!-- Botões de Ação -->
             <div class="action-buttons">
                 <a href="#" id="btn-ler" class="btn btn-primary" target="_blank">
-                    Ler no JW.org
+                    Ler no jw.org
                 </a>
                 <!-- O botão de áudio pode ser um link secundário -->
                 <a href="#" id="btn-ouvir" class="btn btn-secondary" target="_blank">
@@ -50,9 +54,19 @@
             <p>"Este livro da Lei deve estar sempre em seus lábios; LEIA-O em voz baixa DIA e NOITE..."</p>
             <span>- Josué 1:8</span>
         </footer>
+		        <!-- Modal do Calendário -->
+        <div id="calendar-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <h3>Escolha uma data</h3>
+                <input type="date" id="date-picker" class="date-input">
+                <button id="btn-search-date" class="btn btn-primary">Buscar Leitura</button>
+            </div>
+        </div>
 
     </div>
 
+    <script src="dados.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
