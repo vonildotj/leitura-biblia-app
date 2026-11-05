@@ -1,3 +1,52 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Instalar dependências
+      run: npm install
+
+    - name: Instalar Sharp para os ícones
+      run: npm install sharp
+
+    - name: Preparar pasta www
+      run: |
+        mkdir -p www
+        cp index.html www/ || true
+        cp *.css www/ || true
+        cp *.js www/ || true
+        cp *.png www/ || true
+        cp *.json www/ || true
+
+    - name: Preparar Capacitor (Init e Add)
+      run: |
+        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=www || true
+        npx cap add android || true
+
+    - name: Sync Capacitor
+      run: npx cap sync android
+
+    - name: Configurar Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
     - name: Gerar ícones para Android
       run: |
         node -e "
@@ -14,7 +63,6 @@
           };
           
           async function gerar() {
-            // 1. Gera as imagens PNG redimensionadas
             for (const [folder, size] of Object.entries(sizes)) {
               const dir = path.join('android', 'app', 'src', 'main', 'res', folder);
               if (!fs.existsSync(dir)) {
@@ -25,7 +73,6 @@
                   .resize(size, size)
                   .toFile(path.join(dir, 'ic_launcher.png'));
                 
-                // Gera também a versão redonda
                 await sharp('icon.png')
                   .resize(size, size)
                   .toFile(path.join(dir, 'ic_launcher_round.png'));
@@ -34,7 +81,6 @@
               }
             }
 
-            // 2. Cria o arquivo Adaptive Icon (necessário para Android moderno)
             const anyDpiDir = path.join('android', 'app', 'src', 'main', 'res', 'mipmap-anydpi-v26');
             if (!fs.existsSync(anyDpiDir)) {
               fs.mkdirSync(anyDpiDir, { recursive: true });
@@ -55,3 +101,15 @@
             process.exit(1);
           });
         "
+
+    - name: Compilar APK
+      working-directory: ./android
+      run: |
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Salvar o APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-debug
+        path: android/app/build/outputs/apk/debug/app-debug.apk
