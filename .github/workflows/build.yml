@@ -35,7 +35,8 @@ jobs:
 
     - name: Preparar Capacitor (Init e Add)
       run: |
-        npx cap init "Leitura Diária" "com.leitura.diaria4" --web-dir=www || true
+        # MUDANÇA AQUI: O nome do app agora é "Leia a Bíblia"
+        npx cap init "Leia a Bíblia" "com.leia.biblia" --web-dir=www || true
         npx cap add android || true
 
     - name: Sync Capacitor
