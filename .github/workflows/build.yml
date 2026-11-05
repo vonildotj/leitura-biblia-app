@@ -21,10 +21,8 @@ jobs:
     - name: Instalar dependências
       run: npm install
 
-    # --- AQUI ESTÁ A CORREÇÃO: INSTALAR O SHARP NOVAMENTE ---
     - name: Instalar Sharp
       run: npm install sharp
-    # --------------------------------------------------------
 
     - name: Preparar pasta www
       run: |
@@ -37,7 +35,8 @@ jobs:
 
     - name: Preparar Capacitor (Init e Add)
       run: |
-        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=www || true
+        # MUDANÇA AQUI: O ID agora é diaria2 para forçar o celular a criar um novo app
+        npx cap init "Leitura Diária" "com.leitura.diaria2" --web-dir=www || true
         npx cap add android || true
 
     - name: Sync Capacitor
