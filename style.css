@@ -1,13 +1,6 @@
-/* Design Premium - Dark Mode com Detalhes Dourados */
-:root {
-    --bg-color: #121212; /* Fundo escuro profundo */
-    --card-bg: #1E1E1E; /* Card ligeiramente mais claro */
-    --primary-color: #D4A843; /* Dourado elegante para destaque */
-    --text-main: #F5F5F5; /* Texto claro */
-    --text-muted: #A0A0A0; /* Texto secundário */
-    --border-color: #333333;
-}
-
+/* =========================================
+   CONFIGURAÇÕES GERAIS E TIPOGRAFIA
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
@@ -16,14 +9,13 @@
 }
 
 body {
-    background-color: var(--bg-color);
     font-family: 'Inter', sans-serif;
-    color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .app-container {
@@ -34,16 +26,51 @@ body {
     gap: 30px;
 }
 
-/* Cabeçalho */
+/* =========================================
+   TEMA CLARO (Padrão)
+   ========================================= */
+:root {
+    --bg-color: #F8F5F2;
+    --card-bg: #FFFFFF;
+    --text-main: #2C3E50;
+    --text-muted: #7F8C8D;
+    --primary-color: #D4A843;
+    --primary-text: #FFFFFF;
+    --border-color: #EAEAEA;
+    --btn-secondary-bg: #F0F2F5;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+}
+
+/* =========================================
+   TEMA ESCURO
+   ========================================= */
+body.dark-mode {
+    --bg-color: #121212;
+    --card-bg: #1E1E1E;
+    --text-main: #F5F5F5;
+    --text-muted: #A0A0A0;
+    --primary-color: #D4A843;
+    --primary-text: #121212;
+    --border-color: #333333;
+    --btn-secondary-bg: transparent;
+}
+
+/* =========================================
+   CABEÇALHO E BOTÕES DO TOPO
+   ========================================= */
 .app-header {
     text-align: center;
+    position: relative;
     margin-top: 10px;
 }
 
 .app-header h1 {
     font-size: 22px;
     font-weight: 800;
-    color: var(--text-main);
     letter-spacing: 1.5px;
 }
 
@@ -56,12 +83,34 @@ body {
     margin-top: 4px;
 }
 
-/* Card Principal */
+/* Botões de Tema (Sol/Lua) e Calendário */
+.theme-toggle, .date-toggle {
+    position: absolute;
+    top: 10px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 15px;
+    z-index: 999;
+    transition: transform 0.2s;
+}
+
+.theme-toggle { right: 10px; }
+.date-toggle { left: 10px; }
+
+.theme-toggle:active, .date-toggle:active {
+    transform: scale(0.9);
+}
+
+/* =========================================
+   CARD PRINCIPAL
+   ========================================= */
 .main-card {
     background-color: var(--card-bg);
     border-radius: 20px;
     padding: 40px 24px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,9 +118,9 @@ body {
     border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Efeito de linha dourada no topo do card */
 .main-card::before {
     content: '';
     position: absolute;
@@ -82,9 +131,11 @@ body {
     background-color: var(--primary-color);
 }
 
-/* Data */
+/* =========================================
+   CONTEÚDO (DATA E LEITURA)
+   ========================================= */
 .date-badge {
-    background-color: rgba(212, 168, 67, 0.15); /* Dourado transparente */
+    background-color: rgba(212, 168, 67, 0.15);
     color: var(--primary-color);
     padding: 10px 24px;
     border-radius: 8px;
@@ -94,7 +145,6 @@ body {
     border: 1px solid rgba(212, 168, 67, 0.3);
 }
 
-/* Leitura */
 .reading-content {
     text-align: center;
 }
@@ -103,11 +153,12 @@ body {
     font-family: 'Lora', serif;
     font-size: 36px;
     font-weight: 700;
-    color: var(--text-main);
     line-height: 1.3;
 }
 
-/* Botões */
+/* =========================================
+   BOTÕES DE AÇÃO
+   ========================================= */
 .action-buttons {
     display: flex;
     flex-direction: column;
@@ -126,7 +177,7 @@ body {
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: transform 0.2s, opacity 0.2s, background-color 0.3s;
 }
 
 .btn:active {
@@ -135,17 +186,19 @@ body {
 
 .btn-primary {
     background-color: var(--primary-color);
-    color: #121212; /* Texto escuro para contraste com o dourado */
+    color: var(--primary-text);
     box-shadow: 0 4px 20px rgba(212, 168, 67, 0.2);
 }
 
 .btn-secondary {
-    background-color: transparent;
+    background-color: var(--btn-secondary-bg);
     color: var(--text-main);
     border: 1px solid var(--border-color);
 }
 
-/* Rodapé */
+/* =========================================
+   RODAPÉ
+   ========================================= */
 .app-footer {
     text-align: center;
     padding: 0 10px;
@@ -167,43 +220,25 @@ body {
     font-weight: 600;
     color: var(--primary-color);
 }
-/* =========================================
-   BOTÃO DE CALENDÁRIO (TOPO ESQUERDO)
-   ========================================= */
-.date-toggle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 5px;
-    transition: transform 0.2s;
-}
-
-.date-toggle:active {
-    transform: scale(0.9);
-}
 
 /* =========================================
    MODAL (JANELA DO CALENDÁRIO)
    ========================================= */
 .modal {
-    display: none; /* Escondido por padrão */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro transparente */
+    background-color: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
 }
 
 .modal.active {
-    display: flex; /* Mostra o modal quando ativo */
+    display: flex;
 }
 
 .modal-content {
@@ -238,7 +273,6 @@ body {
     color: var(--primary-color);
 }
 
-/* Campo de data */
 .date-input {
     width: 100%;
     padding: 12px;
@@ -252,7 +286,6 @@ body {
     outline: none;
 }
 
-/* Ajuste para o ícone do calendário no modo escuro do Chrome/Edge */
 body.dark-mode .date-input::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
