@@ -21,15 +21,23 @@ jobs:
     - name: Instalar dependências
       run: npm install
 
-    - name: Preparar pasta web
-      run: npm run build
-
-    - name: Preparar Capacitor
+    - name: Preparar pasta www
       run: |
-        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=www
-        npx cap add android
+        mkdir -p www
+        cp index.html www/
+        cp clientes.js www/ || true
+        cp sw.js www/ || true
+        cp *.jpg www/ || true
+        cp *.png www/ || true
+        cp manifest.json www/ || true
 
-    - name: Sincronizar arquivos
+    - name: Preparar Capacitor (Init e Add)
+      run: |
+        # Verifica se o Android já foi adicionado. Se não, adiciona.
+        npx cap init "Leitura Diária" "com.leitura.diaria" --web-dir=www || true
+        npx cap add android || true
+
+    - name: Sync Capacitor
       run: npx cap sync android
 
     - name: Configurar Java
@@ -38,7 +46,6 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # --- NOVO PASSO: GERAR E COPIAR OS ÍCONES COM SHARP ---
     - name: Gerar ícones para Android
       run: |
         node -e "
@@ -66,7 +73,6 @@ jobs:
               .catch(err => console.error(err));
           });
         "
-    # ---------------------------------------------
 
     - name: Compilar APK
       working-directory: ./android
