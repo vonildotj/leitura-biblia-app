@@ -15,7 +15,10 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    transition: background-color 0.3s, color 0.3s;
+    background: linear-gradient(135deg, #E0EAFC 0%, #CFDEF3 100%);
+    background-attachment: fixed; /* Garante que o degradê preencha a tela toda */
+    background-size: cover;
+    transition: background 0.3s, color 0.3s;
 }
 
 .app-container {
@@ -30,14 +33,14 @@ body {
    TEMA CLARO (Padrão)
    ========================================= */
 :root {
-    --bg-color: #EAECEE; /* Fundo da tela ligeiramente mais escuro (cinza claro) */
-    --card-bg: #FFFFFF; /* Cartões brancos para dar contraste */
-    --text-main: #1A252C; /* Texto quase preto (Melhor legibilidade) */
-    --text-muted: #5D6D7E; /* Texto secundário mais escuro */
-    --primary-color: #0E5A6D; /* Azul-Petróleo */
+    --bg-color: transparent; /* O fundo agora é o gradiente do body */
+    --card-bg: rgba(255, 255, 255, 0.7); /* Branco translúcido (efeito vidro) */
+    --text-main: #0A192F; /* Azul escuro quase preto (moderno) */
+    --text-muted: #3E5C76; /* Azul acinzentado */
+    --primary-color: #0052D4; /* Azul elétrico vibrante */
     --primary-text: #FFFFFF;
-    --border-color: #D5D8DC; /* Bordas mais visíveis */
-    --btn-secondary-bg: #F4F6F7;
+    --border-color: rgba(255, 255, 255, 0.5); /* Borda de vidro */
+    --btn-secondary-bg: rgba(255, 255, 255, 0.5);
 }
 
 body {
@@ -108,9 +111,11 @@ body.dark-mode {
    ========================================= */
 .main-card {
     background-color: var(--card-bg);
+    backdrop-filter: blur(15px); /* Desfoca o fundo atrás do cartão */
+    -webkit-backdrop-filter: blur(15px); /* Suporte para Safari/iOS */
     border-radius: 20px;
     padding: 40px 24px;
-    box-shadow: 0 12px 35px rgba(14, 90, 109, 0.15); /* Sombra azulada mais forte e elegante */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); /* Sombra futurista */
     display: flex;
     flex-direction: column;
     align-items: center;
