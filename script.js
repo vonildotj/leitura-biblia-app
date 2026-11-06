@@ -22,32 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
         "Apocalipse": 66
     };
 
-    async function abrirNoJwLibrary() {
-        // Pega o texto da leitura atual na tela (ex: "Mateus 24:14" ou "Mateus 24-25")
-        const textoLeitura = document.getElementById('display-reading').textContent;
+        // Função 1: Abre um capítulo específico
+    async function abrirCapituloNoJwLibrary(nomeLivro, numeroCapitulo) {
+        const numLivro = livrosBiblia[nomeLivro];
+        if (!numLivro) return;
         
-        // Tenta encontrar o nome do livro no texto
-        let livroEncontrado = null;
-        for (const livro in livrosBiblia) {
-            if (textoLeitura.startsWith(livro)) {
-                livroEncontrado = livro;
-                break;
-            }
-        }
-
-        if (!livroEncontrado) {
-            alert("Não foi possível identificar o livro. Abrindo o site do JW.org.");
-            return;
-        }
-
-        const numLivro = livrosBiblia[livroEncontrado];
-        
-        // Pega os números do texto (capítulo e versículo)
-        const numeros = textoLeitura.match(/\d+/g) || [];
-        const capitulo = numeros[0] ? String(numeros[0]).padStart(3, '0') : '000';
-        const versiculo = numeros[1] ? String(numeros[1]).padStart(3, '0') : '000';
-        
-        const codigo = `${numLivro}${capitulo}${versiculo}`;
+        const cap = String(numeroCapitulo).padStart(3, '0');
+        const codigo = `${numLivro}${cap}000`;
         const url = `jwlibrary:///finder?bible=${codigo}`;
 
         try {
@@ -59,13 +40,55 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.open(`https://www.jw.org/finder?bible=${codigo}`, '_blank');
                 }
             } else {
-                // Fallback para quando testado no navegador do PC
                 window.open(`https://www.jw.org/finder?bible=${codigo}`, '_blank');
             }
         } catch (error) {
             console.error("Erro ao abrir JW Library:", error);
             window.open(`https://www.jw.org/finder?bible=${codigo}`, '_blank');
         }
+    }
+
+    // Função 2: Gera os botões na tela
+    function gerarBotoesCapitulos() {
+        const container = document.getElementById('jw-buttons-container');
+        container.innerHTML = ''; // Limpa os botões antigos
+        
+        const textoLeitura = document.getElementById('display-reading').textContent;
+        
+        // Descobre o livro
+        let livroEncontrado = null;
+        for (const livro in livrosBiblia) {
+            if (textoLeitura.startsWith(livro)) {
+                livroEncontrado = livro;
+                break;
+            }
+        }
+
+        if (!livroEncontrado) return; // Se não achar o livro, não faz nada
+
+        // Descobre os capítulos (ex: "Atos 4-6" vira [4,5,6], "Mateus 24:14" vira [24])
+        const numeros = textoLeitura.match(/\d+/g) || [];
+        if (numeros.length === 0) return;
+
+        let capitulos = [];
+        if (textoLeitura.includes('-') && numeros.length >= 2) {
+            const inicio = parseInt(numeros[0]);
+            const fim = parseInt(numeros[1]);
+            for (let i = inicio; i <= fim; i++) {
+                capitulos.push(i);
+            }
+        } else {
+            capitulos.push(parseInt(numeros[0]));
+        }
+
+        // Cria um botão para cada capítulo
+        capitulos.forEach(cap => {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-primary btn-capitulo';
+            btn.textContent = `Capítulo ${cap}`;
+            btn.onclick = () => abrirCapituloNoJwLibrary(livroEncontrado, cap);
+            container.appendChild(btn);
+        });
     }
 
     // --- 1. LÓGICA DO TEMA CLARO/ESCURO ---
@@ -240,6 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
             displayReading.textContent = "Leitura não encontrada";
             btnLer.href = "#";
         }
+
+        // Chama a função que cria os botões dos capítulos
+        gerarBotoesCapitulos();
 
         // --- LÓGICA DE RETORNO AUTOMÁTICO APÓS 30 SEGUNDOS ---
         // Só ativa se uma data específica foi pesquisada (não é o carregamento inicial)
