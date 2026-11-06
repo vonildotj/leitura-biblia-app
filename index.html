@@ -43,6 +43,29 @@
                 </a>
             </div>
 
+            <!-- Informações do Livro -->
+            <div id="info-livro" class="info-section" style="display: none;">
+                <h3 id="titulo-info">Informações sobre o livro</h3>
+                <div class="tabela-info">
+                    <p><strong>Tempo abrangido:</strong> <span id="info-tempo"></span></p>
+                    <p><strong>Escrita terminada:</strong> <span id="info-escrita"></span></p>
+                    <p><strong>Lugar:</strong> <span id="info-lugar"></span></p>
+                    <p><strong>Escritor(es):</strong> <span id="info-escritor"></span></p>
+                </div>
+            </div>
+
+            <!-- Conteúdo do Livro (Dinâmico) -->
+            <div id="conteudo-livro" class="conteudo-section" style="display: none;">
+                <h3 id="titulo-conteudo">Conteúdo do livro</h3>
+                <div id="texto-conteudo"></div>
+            </div>
+
+            <!-- Vídeos Relacionados -->
+            <div id="videos-livro" class="videos-section" style="display: none;">
+                <h3 id="titulo-videos">Vídeos relacionados</h3>
+                <div id="lista-videos"></div>
+            </div>
+
         </main>
 
         <!-- Rodapé (Versículo do dia fixo) -->
@@ -63,6 +86,7 @@
     </div>
 
     <script src="dados.js"></script>
+    <script src="comentarios.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
