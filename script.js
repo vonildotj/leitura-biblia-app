@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const datePicker = document.getElementById('date-picker');
     const btnSearchDate = document.getElementById('btn-search-date');
 
+    // Abre o calendário ao clicar no ícone do topo
     dateToggleBtn.addEventListener('click', () => {
         modal.classList.add('active');
     });
@@ -156,6 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayDate = document.getElementById('display-date');
     const displayReading = document.getElementById('display-reading');
     const btnLer = document.getElementById('btn-ler');
+
+    // ADICIONE O CÓDIGO AQUI:
+    displayDate.addEventListener('click', () => {
+        modal.classList.add('active');
+    });
 
     let timeoutRetorno = null; // Variável para guardar o timer
 
