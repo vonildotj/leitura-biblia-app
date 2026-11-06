@@ -286,6 +286,22 @@ body.dark-mode {
     outline: none;
 }
 
+.jw-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.btn-capitulo {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    flex: 0 0 auto; /* Impede o botão de esticar e ocupar a linha toda */
+}
 body.dark-mode .date-input::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
