@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Leitura Diária da Bíblia</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Fonte do Google Fonts para um visual profissional -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -13,34 +12,38 @@
     <div class="app-container">
         
         <!-- Cabeçalho -->
-        <!-- Cabeçalho -->
         <header class="app-header">
             <button class="theme-toggle" id="theme-toggle" title="Alternar Tema">🌙</button>
-            
             <h1>LEITURA DIÁRIA</h1>
             <p>DA BÍBLIA</p>
         </header>
 
-        <!-- Card Principal (Design Moderno) -->
+        <!-- Card Principal -->
         <main class="main-card">
             
-            <!-- Data (Clicável) -->
-            <button class="date-badge" id="display-date" style="cursor: pointer; font-family: inherit;">
-                Carregando...
-            </button>
+            <!-- Bloco Principal -->
+            <div class="bloco-principal">
+                <!-- Input de data invisível para o calendário nativo -->
+                <input type="date" id="hidden-date-picker" style="position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;">
 
-            <!-- Leitura -->
-            <div class="reading-content">
-                <h2 id="display-reading">...</h2>
-            </div>
+                <!-- Data (Clicável) -->
+                <button class="date-badge" id="display-date" style="cursor: pointer; font-family: inherit;">
+                    Carregando...
+                </button>
 
-            <!-- Botões de Ação -->
-            <div id="jw-buttons-container" class="jw-buttons-container"></div>
+                <!-- Leitura -->
+                <div class="reading-content">
+                    <h2 id="display-reading">...</h2>
+                </div>
 
-            <div class="action-buttons">
-                <a href="#" id="btn-ler" class="btn btn-secondary" target="_blank" style="width: 100%;">
-                    Ler no jw.org
-                </a>
+                <!-- Botões de Ação -->
+                <div id="jw-buttons-container" class="jw-buttons-container"></div>
+
+                <div class="action-buttons">
+                    <a href="#" id="btn-ler" class="btn btn-secondary" target="_blank" style="width: 100%;">
+                        Ler no jw.org
+                    </a>
+                </div>
             </div>
 
             <!-- Informações do Livro -->
@@ -54,7 +57,7 @@
                 </div>
             </div>
 
-            <!-- Conteúdo do Livro (Dinâmico) -->
+            <!-- Conteúdo do Livro -->
             <div id="conteudo-livro" class="conteudo-section" style="display: none;">
                 <h3 id="titulo-conteudo">Conteúdo do livro</h3>
                 <div id="texto-conteudo"></div>
@@ -68,22 +71,13 @@
 
         </main>
 
-        <!-- Rodapé (Versículo do dia fixo) -->
+        <!-- Rodapé -->
         <footer class="app-footer">
             <div class="versiculo-box">
                 <p>"Este livro da Lei deve estar sempre em seus lábios; LEIA-O em voz baixa DIA e NOITE..."</p>
-                <span>- Josué 1:8</span>
+                <span>Josué 1:8</span>
             </div>
         </footer>
-		        <!-- Modal do Calendário -->
-        <div id="calendar-modal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal" id="close-modal">&times;</span>
-                <h3>Escolha uma data</h3>
-                <input type="date" id="date-picker" class="date-input">
-                <button id="btn-search-date" class="btn btn-primary">Buscar Leitura</button>
-            </div>
-        </div>
 
     </div>
 
