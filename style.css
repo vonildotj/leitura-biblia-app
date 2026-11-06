@@ -328,53 +328,92 @@ body.dark-mode {
 body.dark-mode .date-input::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
-
 /* =========================================
    NOVAS SEÇÕES DE INFORMAÇÃO, CONTEÚDO E VÍDEOS
    ========================================= */
 .info-section, .conteudo-section, .videos-section {
     width: 100%;
-    background-color: var(--card-bg); /* Agora é branco */
-    border: 1px solid var(--border-color);
+    background-color: #0A192F; /* Azul Meia-Noite profundo */
+    border: 1px solid #1E3A8A; /* Borda azul sutil */
     border-radius: 12px;
-    padding: 15px;
+    padding: 20px;
     margin-top: 15px;
-    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* Sombra forte para separar */
 }
 
 .info-section h3, .conteudo-section h3, .videos-section h3 {
     font-size: 14px;
-    color: var(--primary-color);
-    margin-bottom: 10px;
+    color: #D4A843; /* Dourado elegante para os títulos */
+    margin-bottom: 15px;
     text-align: center;
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .tabela-info p {
-    font-size: 13px;
-    margin-bottom: 6px;
-    color: var(--text-main);
-    border-bottom: 1px dashed var(--border-color);
-    padding-bottom: 4px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #E2E8F0; /* Texto branco acinzentado */
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    padding-bottom: 6px;
+}
+
+.tabela-info strong {
+    color: #FFFFFF;
 }
 
 #texto-conteudo {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    color: #CBD5E1; /* Texto claro confortável */
     max-height: 250px;
-    overflow-y: auto; /* Adiciona barra de rolagem se for muito grande */
+    overflow-y: auto;
 }
 
 .video-link {
     display: block;
-    background-color: var(--primary-color);
-    color: var(--primary-text);
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo translúcido */
+    color: #FFFFFF;
+    border: 1px solid rgba(212, 168, 67, 0.4); /* Borda dourada */
     text-align: center;
-    padding: 10px;
+    padding: 12px;
     border-radius: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.video-link:hover, .video-link:active {
+    background-color: rgba(212, 168, 67, 0.2); /* Brilha ao clicar */
+}
+
+.versiculo-box {
+    background-color: #0A192F; /* Mesmo Azul Meia-Noite das outras caixas */
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid #D4A843; /* Detalhe dourado */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.versiculo-box p {
+    color: #E2E8F0 !important; /* Força o texto a ficar claro nessa caixa */
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.versiculo-box span {
+    display: block;
+    text-align: right;
+    color: #D4A843 !important; /* Força a assinatura a ficar dourada */
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 5px;
 }
