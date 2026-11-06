@@ -30,14 +30,14 @@ body {
    TEMA CLARO (Padrão)
    ========================================= */
 :root {
-    --bg-color: #E6EBE9; /* Fundo levemente mais escuro para destacar o cartão */
-    --card-bg: #FFFFFF;
-    --text-main: #2C3E50; /* Azul escuro para o texto */
-    --text-muted: #7F8C8D;
-    --primary-color: #0E5A6D; /* Azul-Petróleo profundo (Alto contraste) */
+    --bg-color: #EAECEE; /* Fundo da tela ligeiramente mais escuro (cinza claro) */
+    --card-bg: #FFFFFF; /* Cartões brancos para dar contraste */
+    --text-main: #1A252C; /* Texto quase preto (Melhor legibilidade) */
+    --text-muted: #5D6D7E; /* Texto secundário mais escuro */
+    --primary-color: #0E5A6D; /* Azul-Petróleo */
     --primary-text: #FFFFFF;
-    --border-color: #E2E8F0;
-    --btn-secondary-bg: #EDF2F7;
+    --border-color: #D5D8DC; /* Bordas mais visíveis */
+    --btn-secondary-bg: #F4F6F7;
 }
 
 body {
@@ -205,28 +205,34 @@ body.dark-mode {
     margin-bottom: 20px;
 }
 
+.versiculo-box {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
 .app-footer p {
     font-family: 'Lora', serif;
     font-style: italic;
-    font-size: 16px; /* Aumentei o tamanho da fonte */
-    font-weight: 600; /* Deixei a fonte um pouco mais grossa */
-    color: var(--text-main); /* Cor mais escura, em vez de cinza claro */
+    font-size: 16px;
+    font-weight: 600; 
+    color: var(--text-main);
     margin-bottom: 8px;
     line-height: 1.5;
-    background-color: rgba(255, 255, 255, 0.6); /* Um fundo branco translúcido */
-    padding: 15px;
-    border-radius: 12px;
-    border-left: 4px solid var(--primary-color); /* Uma linha azul na lateral esquerda */
     text-align: left;
 }
 
 .app-footer span {
+    display: block;
+    text-align: right;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--primary-color);
+    margin-top: 5px;
 }
-
 /* =========================================
    MODAL (JANELA DO CALENDÁRIO)
    ========================================= */
@@ -323,7 +329,8 @@ body.dark-mode .date-input::-webkit-calendar-picker-indicator {
    ========================================= */
 .info-section, .conteudo-section, .videos-section {
     width: 100%;
-    background-color: var(--bg-color);
+    background-color: var(--card-bg); /* Agora é branco */
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 15px;
     margin-top: 15px;
