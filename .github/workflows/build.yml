@@ -21,7 +21,7 @@ jobs:
     - name: Instalar dependências
       run: |
         npm install
-        npm install @capacitor/app-launcher
+        npm install @capacitor/app-launcher@latest-5
 
     - name: Instalar Sharp
       run: npm install sharp
