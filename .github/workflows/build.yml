@@ -19,7 +19,9 @@ jobs:
         node-version: '20'
 
     - name: Instalar dependências
-      run: npm install
+      run: |
+        npm install
+        npm install @capacitor/app-launcher
 
     - name: Instalar Sharp
       run: npm install sharp
@@ -41,6 +43,23 @@ jobs:
 
     - name: Sync Capacitor
       run: npx cap sync android
+
+    - name: Adicionar permissão para abrir o JW Library
+      run: |
+        node -e "
+          const fs = require('fs');
+          const path = 'android/app/src/main/AndroidManifest.xml';
+          let content = fs.readFileSync(path, 'utf8');
+          
+          if (!content.includes('jwlibrary')) {
+            const queries = '    <queries>\n        <intent>\n            <action android:name=\"android.intent.action.VIEW\" />\n            <data android:scheme=\"jwlibrary\" />\n        </intent>\n    </queries>\n';
+            content = content.replace('<application', queries + '    <application');
+            fs.writeFileSync(path, content);
+            console.log('Permissão jwlibrary adicionada com sucesso.');
+          } else {
+            console.log('Permissão jwlibrary já existe.');
+          }
+        "
 
     - name: Configurar Java
       uses: actions/setup-java@v4
