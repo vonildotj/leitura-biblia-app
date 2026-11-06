@@ -263,8 +263,54 @@ document.addEventListener('DOMContentLoaded', () => {
         // Chama a função que cria os botões dos capítulos
         gerarBotoesCapitulos();
 
+        // --- LÓGICA DOS NOVOS CAMPOS DE INFORMAÇÃO ---
+        const infoComentario = comentariosBiblia.find(item => item.data === dataBusca);
+        
+        const divInfo = document.getElementById('info-livro');
+        const divConteudo = document.getElementById('conteudo-livro');
+        const divVideos = document.getElementById('videos-livro');
+
+        if (infoComentario) {
+            // Preenche Informações do Livro
+            document.getElementById('titulo-info').textContent = `INFORMAÇÕES SOBRE ${infoComentario.livro.toUpperCase()}`;
+            document.getElementById('info-tempo').textContent = infoComentario.tempo || '-';
+            document.getElementById('info-escrita').textContent = infoComentario.escrita || '-';
+            document.getElementById('info-lugar').textContent = infoComentario.lugar || '-';
+            document.getElementById('info-escritor').textContent = infoComentario.escritor || '-';
+            divInfo.style.display = 'block';
+
+            // Preenche Conteúdo do Livro
+            document.getElementById('titulo-conteudo').textContent = `CONTEÚDO DE ${infoComentario.livro.toUpperCase()}`;
+            const textoFormatado = infoComentario.conteudo.replace(/\n/g, '<br>');
+            document.getElementById('texto-conteudo').innerHTML = textoFormatado;
+            divConteudo.style.display = 'block';
+
+            // Preenche Vídeos Relacionados (se houver)
+            const listaVideos = document.getElementById('lista-videos');
+            listaVideos.innerHTML = ''; // Limpa a lista antes de adicionar
+            
+            if (infoComentario.videos && infoComentario.videos.length > 0) {
+                infoComentario.videos.forEach((link, index) => {
+                    const a = document.createElement('a');
+                    a.href = link;
+                    a.target = '_blank';
+                    a.className = 'video-link';
+                    a.innerHTML = `▶ Vídeo Relacionado ${index + 1}`;
+                    listaVideos.appendChild(a);
+                });
+                divVideos.style.display = 'block';
+                document.getElementById('titulo-videos').textContent = `VÍDEOS RELACIONADOS AO LIVRO DE ${infoComentario.livro.toUpperCase()}`;
+            } else {
+                divVideos.style.display = 'none'; // Esconde a caixa se não houver vídeos
+            }
+        } else {
+            // Se não encontrar dados no CSV, esconde as caixas
+            divInfo.style.display = 'none';
+            divConteudo.style.display = 'none';
+            divVideos.style.display = 'none';
+        }
+
         // --- LÓGICA DE RETORNO AUTOMÁTICO APÓS 30 SEGUNDOS ---
-        // Só ativa se uma data específica foi pesquisada (não é o carregamento inicial)
         if (dataEspecifica) {
             timeoutRetorno = setTimeout(() => {
                 atualizarTela(); // Volta para a data de hoje
