@@ -131,16 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 2. LÓGICA DO MODAL (CALENDÁRIO) ---
-    const dateToggleBtn = document.getElementById('date-toggle');
     const modal = document.getElementById('calendar-modal');
     const closeModalBtn = document.getElementById('close-modal');
     const datePicker = document.getElementById('date-picker');
     const btnSearchDate = document.getElementById('btn-search-date');
-
-    // Abre o calendário ao clicar no ícone do topo
-    dateToggleBtn.addEventListener('click', () => {
-        modal.classList.add('active');
-    });
 
     closeModalBtn.addEventListener('click', () => {
         modal.classList.remove('active');
