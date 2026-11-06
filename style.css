@@ -317,3 +317,52 @@ body.dark-mode {
 body.dark-mode .date-input::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
+
+/* =========================================
+   NOVAS SEÇÕES DE INFORMAÇÃO, CONTEÚDO E VÍDEOS
+   ========================================= */
+.info-section, .conteudo-section, .videos-section {
+    width: 100%;
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid var(--border-color);
+}
+
+.info-section h3, .conteudo-section h3, .videos-section h3 {
+    font-size: 14px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.tabela-info p {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: var(--text-main);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 4px;
+}
+
+#texto-conteudo {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-height: 250px;
+    overflow-y: auto; /* Adiciona barra de rolagem se for muito grande */
+}
+
+.video-link {
+    display: block;
+    background-color: var(--primary-color);
+    color: var(--primary-text);
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
