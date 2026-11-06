@@ -156,10 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayDate = document.getElementById('display-date');
     const displayReading = document.getElementById('display-reading');
     const btnLer = document.getElementById('btn-ler');
-    const btnJwLibrary = document.getElementById('btn-jwlibrary');
-
-    // Adiciona o evento de clique no novo botão
-    btnJwLibrary.addEventListener('click', abrirNoJwLibrary);
 
     let timeoutRetorno = null; // Variável para guardar o timer
 
