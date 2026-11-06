@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         capitulos.forEach(cap => {
             const btn = document.createElement('button');
             btn.className = 'btn btn-primary btn-capitulo';
-            btn.textContent = `Capítulo ${cap}`;
+            btn.textContent = `${cap}`;
             btn.onclick = () => abrirCapituloNoJwLibrary(livroEncontrado, cap);
             container.appendChild(btn);
         });
