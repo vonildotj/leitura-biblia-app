@@ -30,14 +30,14 @@ body {
    TEMA CLARO (Padrão)
    ========================================= */
 :root {
-    --bg-color: #F8F5F2;
+    --bg-color: #F4F7F6; /* Fundo cinza-esverdeado bem suave */
     --card-bg: #FFFFFF;
-    --text-main: #2C3E50;
+    --text-main: #2C3E50; /* Azul escuro para o texto */
     --text-muted: #7F8C8D;
-    --primary-color: #D4A843;
+    --primary-color: #0E5A6D; /* Azul-Petróleo profundo (Alto contraste) */
     --primary-text: #FFFFFF;
-    --border-color: #EAEAEA;
-    --btn-secondary-bg: #F0F2F5;
+    --border-color: #E2E8F0;
+    --btn-secondary-bg: #EDF2F7;
 }
 
 body {
@@ -135,14 +135,14 @@ body.dark-mode {
    CONTEÚDO (DATA E LEITURA)
    ========================================= */
 .date-badge {
-    background-color: rgba(212, 168, 67, 0.15);
+    background-color: rgba(14, 90, 109, 0.08); /* Azul bem clarinho */
     color: var(--primary-color);
     padding: 10px 24px;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 1px;
-    border: 1px solid rgba(212, 168, 67, 0.3);
+    border: 1px solid rgba(14, 90, 109, 0.25);
 }
 
 .reading-content {
@@ -295,12 +295,18 @@ body.dark-mode {
 }
 
 .btn-capitulo {
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
+    padding: 0;
+    width: 48px;
+    height: 48px;
+    font-size: 1.1rem;
+    border-radius: 50%; /* Deixa o botão redondo */
     border: none;
     cursor: pointer;
-    flex: 0 0 auto; /* Impede o botão de esticar e ocupar a linha toda */
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 }
 body.dark-mode .date-input::-webkit-calendar-picker-indicator {
     filter: invert(1);
