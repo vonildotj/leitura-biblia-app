@@ -130,32 +130,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. LÓGICA DO MODAL (CALENDÁRIO) ---
-    const modal = document.getElementById('calendar-modal');
-    const closeModalBtn = document.getElementById('close-modal');
-    const datePicker = document.getElementById('date-picker');
-    const btnSearchDate = document.getElementById('btn-search-date');
-
-    closeModalBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-        }
-    });
-
     // --- 3. LÓGICA INTELIGENTE (LOOP ANUAL E BUSCA) ---
     
     const displayDate = document.getElementById('display-date');
     const displayReading = document.getElementById('display-reading');
     const btnLer = document.getElementById('btn-ler');
 
-    // ADICIONE O CÓDIGO AQUI:
+    // Abre o calendário nativo ao clicar na data
+    const hiddenDatePicker = document.getElementById('hidden-date-picker');
+
     displayDate.addEventListener('click', () => {
-        modal.classList.add('active');
+        if (hiddenDatePicker) {
+            // Tenta usar o método moderno (funciona melhor no Chrome)
+            if (hiddenDatePicker.showPicker) {
+                try {
+                    hiddenDatePicker.showPicker();
+                    return;
+                } catch (e) {
+                    console.warn("showPicker falhou, tentando click()");
+                }
+            }
+            // Fallback para navegadores antigos
+            hiddenDatePicker.click();
+        }
     });
+
+    // Quando o usuário escolher uma data no input escondido
+    if (hiddenDatePicker) {
+        hiddenDatePicker.addEventListener('change', (e) => {
+            if (e.target.value) {
+                atualizarTela(e.target.value);
+            }
+        });
+    }
 
     let timeoutRetorno = null; // Variável para guardar o timer
 
@@ -317,16 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 30000); // 30.000 milissegundos = 30 segundos
         }
     }
-
-    // Evento do botão "Buscar Leitura"
-    btnSearchDate.addEventListener('click', () => {
-        if (datePicker.value) {
-            atualizarTela(datePicker.value);
-            modal.classList.remove('active'); 
-        } else {
-            alert("Por favor, escolha uma data.");
-        }
-    });
 
     // Carrega a leitura de hoje ao abrir o app
     atualizarTela();
