@@ -30,7 +30,7 @@ body {
    TEMA CLARO (Padrão)
    ========================================= */
 :root {
-    --bg-color: #F4F7F6; /* Fundo cinza-esverdeado bem suave */
+    --bg-color: #E6EBE9; /* Fundo levemente mais escuro para destacar o cartão */
     --card-bg: #FFFFFF;
     --text-main: #2C3E50; /* Azul escuro para o texto */
     --text-muted: #7F8C8D;
@@ -110,7 +110,7 @@ body.dark-mode {
     background-color: var(--card-bg);
     border-radius: 20px;
     padding: 40px 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 35px rgba(14, 90, 109, 0.15); /* Sombra azulada mais forte e elegante */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -208,10 +208,16 @@ body.dark-mode {
 .app-footer p {
     font-family: 'Lora', serif;
     font-style: italic;
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    line-height: 1.6;
+    font-size: 16px; /* Aumentei o tamanho da fonte */
+    font-weight: 600; /* Deixei a fonte um pouco mais grossa */
+    color: var(--text-main); /* Cor mais escura, em vez de cinza claro */
+    margin-bottom: 8px;
+    line-height: 1.5;
+    background-color: rgba(255, 255, 255, 0.6); /* Um fundo branco translúcido */
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color); /* Uma linha azul na lateral esquerda */
+    text-align: left;
 }
 
 .app-footer span {
@@ -307,7 +313,7 @@ body.dark-mode {
     justify-content: center;
     align-items: center;
 }
-}
+
 body.dark-mode .date-input::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
