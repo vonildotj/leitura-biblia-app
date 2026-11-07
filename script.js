@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayDate = document.getElementById('display-date');
     const displayReading = document.getElementById('display-reading');
     const btnLer = document.getElementById('btn-ler');
+	const btnVoltarHoje = document.getElementById('btn-voltar-hoje');
 
     // Abre o calendário nativo ao clicar na data
     const hiddenDatePicker = document.getElementById('hidden-date-picker');
@@ -161,6 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.value) {
                 atualizarTela(e.target.value);
             }
+        });
+    }
+	
+	// Evento do botão "Voltar para Hoje"
+    if (btnVoltarHoje) {
+        btnVoltarHoje.addEventListener('click', () => {
+            atualizarTela(); // Volta para a data de hoje
         });
     }
 
@@ -247,11 +255,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const anoExibir = dataParaMostrar.getFullYear();
         
         displayDate.textContent = `${diaExibir}/${mesExibir}/${anoExibir}`;
+		// Mostra ou esconde o botão "Voltar para Hoje"
+        const hoje = new Date();
+        const isHoje = (dataParaMostrar.getDate() === hoje.getDate() && 
+                        dataParaMostrar.getMonth() === hoje.getMonth() && 
+                        dataParaMostrar.getFullYear() === hoje.getFullYear());
+
+        if (btnVoltarHoje) {
+            btnVoltarHoje.style.display = isHoje ? 'none' : 'flex';
+        }
 
         const dia = String(dataParaMostrar.getDate()).padStart(2, '0');
         const mes = String(dataParaMostrar.getMonth() + 1).padStart(2, '0');
+        const ano = dataParaMostrar.getFullYear();
         const dataBusca = `${dia}/${mes}`;
-        const leituraDia = programacaoAnual.find(item => item.data === dataBusca);
+
+        // --- REGRA ESPECIAL PARA ANO BISSEXTO ---
+        let leituraDia = null;
+        const isBissexto = (ano % 4 === 0 && ano % 100 !== 0) || (ano % 400 === 0);
+
+        if (isBissexto && (dataBusca === "28/02" || dataBusca === "29/02" || dataBusca === "01/03")) {
+            // Em ano bissexto, dividimos Josué 1-6 em 3 partes iguais
+            if (dataBusca === "28/02") {
+                leituraDia = { data: "28/02", leitura: "Josué 1-2", links: ["https://wol.jw.org/pt/wol/b/r5/lp-t/nwtsty/6/1", "https://wol.jw.org/pt/wol/b/r5/lp-t/nwtsty/6/2"] };
+            } else if (dataBusca === "29/02") {
+                leituraDia = { data: "29/02", leitura: "Josué 3-4", links: ["https://wol.jw.org/pt/wol/b/r5/lp-t/nwtsty/6/3", "https://wol.jw.org/pt/wol/b/r5/lp-t/nwtsty/6/4"] };
+            } else if (dataBusca === "01/03") {
+                leituraDia = { data: "01/03", leitura: "Josué 5-6", links: ["https://wol.jw.org/pt/wol/b/r5/lp-t/nwtsty/6/5", "https://wol.jw.org/pt/wol/b/r5/lp-t/nwtsty/6/6"] };
+            }
+        } else {
+            // Para todos os outros dias (ou ano normal), busca normal no dados.js
+            leituraDia = programacaoAnual.find(item => item.data === dataBusca);
+        }
+        // --- FIM DA REGRA ESPECIAL ---
 
         if (leituraDia) {
             displayReading.textContent = leituraDia.leitura;
@@ -315,13 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
             divInfo.style.display = 'none';
             divConteudo.style.display = 'none';
             divVideos.style.display = 'none';
-        }
-
-        // --- LÓGICA DE RETORNO AUTOMÁTICO APÓS 30 SEGUNDOS ---
-        if (dataEspecifica) {
-            timeoutRetorno = setTimeout(() => {
-                atualizarTela(); // Volta para a data de hoje
-            }, 30000); // 30.000 milissegundos = 30 segundos
         }
     }
 
