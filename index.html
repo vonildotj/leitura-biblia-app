@@ -26,10 +26,15 @@
                 <!-- Input de data invisível para o calendário nativo -->
                 <input type="date" id="hidden-date-picker" style="position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;">
 
-                <!-- Data (Clicável) -->
-                <button class="date-badge" id="display-date" style="cursor: pointer; font-family: inherit;">
-                    Carregando...
-                </button>
+                <!-- Data (Clicável) e Botão Voltar -->
+                <div class="date-container">
+                    <button class="date-badge" id="display-date" style="cursor: pointer; font-family: inherit;">
+                        Carregando...
+                    </button>
+                    <button class="btn-voltar-hoje" id="btn-voltar-hoje" style="display: none;" title="Voltar para Hoje">
+                        ↺
+                    </button>
+                </div>
 
                 <!-- Leitura -->
                 <div class="reading-content">
